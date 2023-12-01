@@ -35,6 +35,7 @@ def first_last_digit(mixed_alphanum: str, digits: Dict[str, int], first: bool) -
         for key in digits:
             if key in (mixed_alphanum[: limit + 1] if first else mixed_alphanum[-limit - 1 :]):
                 return digits[key]
+    raise Exception(f"{mixed_alphanum} has no {'first' if first else 'last'} digit")
 
 
 def first_and_last_sum(alphanum_text: str, digits: Dict[str, int]) -> int:
