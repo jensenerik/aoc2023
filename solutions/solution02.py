@@ -27,7 +27,7 @@ def parse_game(game_data: str) -> Dict[str, int]:
 
 def compare_games(games: str, cube_max: Dict[str, int]) -> int:
     running_sum = 0
-    for game in games.split("\n"):
+    for game in games.splitlines():
         game_num = int(game.split(":")[0][5:])
         game_max = parse_game(game.split(":")[1])
         game_test = True
@@ -41,7 +41,7 @@ def compare_games(games: str, cube_max: Dict[str, int]) -> int:
 
 def game_powers(games: str) -> int:
     running_sum = 0
-    for game in games.split("\n"):
+    for game in games.splitlines():
         game_max = parse_game(game.split(":")[1])
         running_sum += math.prod(game_max.values())
     return running_sum

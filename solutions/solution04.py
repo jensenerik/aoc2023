@@ -17,14 +17,14 @@ def card_value(single_card: str) -> int:
 
 def sum_up_cards(all_cards: str) -> int:
     running_sum = 0
-    for card in all_cards.split("\n"):
+    for card in all_cards.splitlines():
         card_overlap = card_value(card)
         running_sum += 2 ** (card_overlap - 1) if card_overlap > 0 else 0
     return running_sum
 
 
 def card_accumulator(all_cards: str) -> int:
-    indiv_cards = all_cards.split("\n")
+    indiv_cards = all_cards.splitlines()
     card_counts = {i: 1 for i in range(len(indiv_cards))}  # zero-based index
     for card_num, card in enumerate(indiv_cards):
         card_overlap = card_value(card)

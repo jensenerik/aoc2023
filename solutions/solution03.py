@@ -57,7 +57,7 @@ def process_row(row_number: int, row: str, gear: bool) -> Tuple[List[part_num], 
 def generate_part_nums(text: str) -> List[part_num]:
     part_numbers: List[part_num] = []
     special_chars: List[Tuple[int, int]] = []
-    for row_number, row in enumerate(text.split("\n")):
+    for row_number, row in enumerate(text.splitlines()):
         new_parts, new_specials = process_row(row_number, row, False)
         part_numbers.extend(new_parts)
         special_chars.extend(new_specials)
@@ -81,7 +81,7 @@ def validate_gear(part_numbers: List[part_num], gear: Tuple[int, int]) -> int:
 def generate_gear_products(text: str) -> int:
     part_numbers: List[part_num] = []
     gears: List[Tuple[int, int]] = []
-    for row_number, row in enumerate(text.split("\n")):
+    for row_number, row in enumerate(text.splitlines()):
         new_parts, new_gears = process_row(row_number, row, True)
         part_numbers.extend(new_parts)
         gears.extend(new_gears)

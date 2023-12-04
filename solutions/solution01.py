@@ -40,7 +40,7 @@ def first_last_digit(mixed_alphanum: str, digits: Dict[str, int], first: bool) -
 
 def first_and_last_sum(alphanum_text: str, digits: Dict[str, int]) -> int:
     running_sum = 0
-    lines = alphanum_text.split("\n")
+    lines = alphanum_text.splitlines()
     for line in lines:
         running_sum += 10 * first_last_digit(line, digits, True)
         running_sum += first_last_digit(line, digits, False)
