@@ -13,6 +13,10 @@ CUBE_MAXES = {"red": 12, "green": 13, "blue": 14}
 
 
 def parse_game(game_data: str) -> Dict[str, int]:
+    """
+    From semicolon separated collections of 'N color' values, get maximum per color
+    Returns map from color values to maximums.
+    """
     pulls = game_data.split(";")
     color_max: Dict[str, int] = dict()
     for pull in pulls:
@@ -26,6 +30,10 @@ def parse_game(game_data: str) -> Dict[str, int]:
 
 
 def compare_games(games: str, cube_max: Dict[str, int]) -> int:
+    """
+    Given a set of color maxes, determines for each game whether any color in game max is greater than given maxes.
+    Returns sum of game numbers for games whose game maxes do not exceed given maxes.
+    """
     running_sum = 0
     for game in games.splitlines():
         game_num = int(game.split(":")[0][5:])
@@ -40,6 +48,9 @@ def compare_games(games: str, cube_max: Dict[str, int]) -> int:
 
 
 def game_powers(games: str) -> int:
+    """
+    For each game, takes products of game maxes, sums over games.
+    """
     running_sum = 0
     for game in games.splitlines():
         game_max = parse_game(game.split(":")[1])

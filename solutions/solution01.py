@@ -2,7 +2,7 @@ from typing import Dict
 
 from . import read_input
 
-DIGITS = {str(digit): digit for digit in range(10)}
+DIGITS = {str(digit): digit for digit in range(10)}  # map from string representation to integer for 1 digit ints
 
 WORD_DIGITS = DIGITS | {
     "one": 1,
@@ -31,6 +31,11 @@ zoneight234
 
 
 def first_last_digit(mixed_alphanum: str, digits: Dict[str, int], first: bool) -> int:
+    """
+    Searches in mixed_alphanum for keys of digits.
+    Returns value of digits for first (if first is True) or last found key.
+    Iterates over unlimited windows, which could be limited to max key length.
+    """
     for limit in range(len(mixed_alphanum)):
         for key in digits:
             if key in (mixed_alphanum[: limit + 1] if first else mixed_alphanum[-limit - 1 :]):
@@ -39,6 +44,10 @@ def first_last_digit(mixed_alphanum: str, digits: Dict[str, int], first: bool) -
 
 
 def first_and_last_sum(alphanum_text: str, digits: Dict[str, int]) -> int:
+    """
+    Sums up integers from first and last digits of a collection of lines.
+    Doesn't construct a two-digit number, decimalizes manually.
+    """
     running_sum = 0
     lines = alphanum_text.splitlines()
     for line in lines:

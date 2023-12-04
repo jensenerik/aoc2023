@@ -9,6 +9,9 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11"""
 
 
 def card_value(single_card: str) -> int:
+    """
+    Returns size of overlap, for single card, between winning numbers and 'your numbers', aka card numbers.
+    """
     split_card = single_card.split(":")[1].split("|")
     winning_nums = set([int(item) for item in split_card[0].split()])
     card_nums = set([int(item) for item in split_card[1].split()])
@@ -16,6 +19,10 @@ def card_value(single_card: str) -> int:
 
 
 def sum_up_cards(all_cards: str) -> int:
+    """
+    Takes many cards, uses card_value to calculate overlap between each card.
+    Returns sum of point totals:  1 ovp = 1 pt, 2 ovp = 2 pts, 3 ovp = 4 pts, 4 ovp = 8 pts, 5 ovp = 16 pts
+    """
     running_sum = 0
     for card in all_cards.splitlines():
         card_overlap = card_value(card)
@@ -24,6 +31,11 @@ def sum_up_cards(all_cards: str) -> int:
 
 
 def card_accumulator(all_cards: str) -> int:
+    """
+    Tracks the number of cards when each card overlap adds to total of subsequent cards.
+    We start with one of each card. Card count indicates how many to add to subsequent cards.
+    Returns sum of all cards.
+    """
     indiv_cards = all_cards.splitlines()
     card_counts = {i: 1 for i in range(len(indiv_cards))}  # zero-based index
     for card_num, card in enumerate(indiv_cards):

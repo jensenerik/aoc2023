@@ -25,6 +25,10 @@ class part_num(NamedTuple):
 
 
 def validate_part_number(part_number: part_num, special_chars: List[Tuple[int, int]]) -> bool:
+    """
+    Checks in box around part number for a special character by comparing coordinates in box with special_chars.
+    Returns True if special character is found.
+    """
     for row_num in [part_number.row_number + i for i in [-1, 0, 1]]:
         for col_num in range(part_number.start_col - 1, part_number.end_col + 2):
             if (row_num, col_num) in special_chars:
@@ -33,6 +37,11 @@ def validate_part_number(part_number: part_num, special_chars: List[Tuple[int, i
 
 
 def process_row(row_number: int, row: str, gear: bool) -> Tuple[List[part_num], List[Tuple[int, int]]]:
+    """
+    Checks in a single row for all numbers and special characters.
+    gear option only considers * as a special character.
+    Returns all numbers (part_num objects) and coordinates of special characters
+    """
     part_numbers: List[part_num] = []
     special_chars: List[Tuple[int, int]] = []
     start_col: Optional[int] = None
@@ -49,12 +58,16 @@ def process_row(row_number: int, row: str, gear: bool) -> Tuple[List[part_num], 
                 part_numbers.append(part_num(int(current_number), row_number, start_col, col_number - 1))
             start_col = None
             current_number = ""
-    if start_col is not None:
+    if start_col is not None:  # Occurs when row ends with a number
         part_numbers.append(part_num(int(current_number), row_number, start_col, len(row)))
     return part_numbers, special_chars
 
 
 def generate_part_nums(text: str) -> List[part_num]:
+    """
+    Iteratively constructs list of all numbers and special characters by running process_row on each row.
+    Returns 'part numbers' or numbers which are next to a special char, using validate_part_number.
+    """
     part_numbers: List[part_num] = []
     special_chars: List[Tuple[int, int]] = []
     for row_number, row in enumerate(text.splitlines()):
@@ -65,6 +78,11 @@ def generate_part_nums(text: str) -> List[part_num]:
 
 
 def validate_gear(part_numbers: List[part_num], gear: Tuple[int, int]) -> int:
+    """
+    For each gear, given by coordinate, checks over part numbers to see how many touch.
+    Logic basically checks in box around each number for the gear, so could be unified with validate_part_number.
+    Returns product of part numbers that touch given gear, or zero if fewer than 2 touch.
+    """
     touching_parts = [
         part
         for part in part_numbers
@@ -79,6 +97,11 @@ def validate_gear(part_numbers: List[part_num], gear: Tuple[int, int]) -> int:
 
 
 def generate_gear_products(text: str) -> int:
+    """
+    Iterates over all rows, using process_row to get numbers and gears.
+    For each gear, uses validate_gear to produce product.
+    Returns sum over gears of all gear-products.
+    """
     part_numbers: List[part_num] = []
     gears: List[Tuple[int, int]] = []
     for row_number, row in enumerate(text.splitlines()):
