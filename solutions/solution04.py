@@ -37,13 +37,13 @@ def card_accumulator(all_cards: str) -> int:
     Returns sum of all cards.
     """
     indiv_cards = all_cards.splitlines()
-    card_counts = {i: 1 for i in range(len(indiv_cards))}  # zero-based index
+    card_counts = [1] * len(indiv_cards)  # zero-based index
     for card_num, card in enumerate(indiv_cards):
         card_overlap = card_value(card)
         if card_overlap > 0:
             for j in range(1, card_overlap + 1):
                 card_counts[card_num + j] = card_counts[card_num + j] + card_counts[card_num]
-    return sum(card_counts.values())
+    return sum(card_counts)
 
 
 assert sum_up_cards(EXAMPLE) == 13
