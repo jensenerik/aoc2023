@@ -1,5 +1,5 @@
 import math
-from typing import List, Tuple
+from typing import Any, Tuple
 
 from . import read_input
 
@@ -7,7 +7,7 @@ EXAMPLE = """Time:      7  15   30
 Distance:  9  40  200"""
 
 
-def parse_time_distance(races: str) -> List[Tuple[int, int]]:
+def parse_time_distance(races: str) -> zip[Tuple[Any, ...]]:
     time_distance = [[int(item) for item in row.split()[1:]] for row in races.splitlines()]
     return zip(*time_distance)
 
