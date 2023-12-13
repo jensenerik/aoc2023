@@ -24,7 +24,7 @@ def find_galaxies(input: str) -> List[Tuple[int, int]]:
 
 
 def expand_universe(galaxy_list: List[Tuple[int, int]], expansion_factor: int) -> List[Tuple[int, int]]:
-    empty_row_col: List[Set, Set] = [{}, {}]
+    empty_row_col: List[Set] = [set(), set()]
     for i in range(2):
         filled_row_col = {galaxy[i] for galaxy in galaxy_list}
         empty_row_col[i] = {row_col for row_col in range(max(filled_row_col)) if row_col not in filled_row_col}
